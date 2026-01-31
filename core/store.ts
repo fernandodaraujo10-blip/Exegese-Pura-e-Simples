@@ -4,7 +4,9 @@ import {
     AdminConfig,
     INITIAL_USER,
     INITIAL_ADMIN_CONFIG,
-    AppView
+    INITIAL_READING_SETTINGS,
+    AppView,
+    ReadingSettings
 } from './types';
 import {
     getAdminConfig,
@@ -20,6 +22,7 @@ interface AppState {
     user: UserProfile;
     config: AdminConfig;
     theme: 'light' | 'dark';
+    readingSettings: ReadingSettings;
     isLoading: boolean;
 
     // Actions
@@ -27,6 +30,7 @@ interface AppState {
     setUser: (user: UserProfile) => void;
     setConfig: (config: AdminConfig) => void;
     setTheme: (theme: 'light' | 'dark') => void;
+    setReadingSettings: (settings: Partial<ReadingSettings>) => void;
     setLoading: (loading: boolean) => void;
 
     // Async Hydration
@@ -41,6 +45,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     user: INITIAL_USER,
     config: INITIAL_ADMIN_CONFIG,
     theme: CoreStorage.loadTheme(),
+    readingSettings: INITIAL_READING_SETTINGS, // To be improved with local storage
     isLoading: true,
 
     setView: (view, params = null) => set({ view, viewParams: params }),
@@ -59,6 +64,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         set({ theme });
         CoreStorage.saveTheme(theme);
     },
+
+    setReadingSettings: (settings) => set((state) => ({
+        readingSettings: { ...state.readingSettings, ...settings }
+    })),
 
     setLoading: (loading) => set({ isLoading: loading }),
 

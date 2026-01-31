@@ -5,8 +5,9 @@ export enum AppView {
   HOME = 'HOME',
   BIBLE = 'BIBLE',
   EXEGESIS = 'EXEGESIS',
-  TOOLS = 'TOOLS', // Anteriormente NOTES/Ferramentas
-  MORE = 'MORE', // Anteriormente COMMUNITY/Ajuda
+  TOOLS = 'TOOLS',
+  COMMUNITY = 'COMMUNITY',
+  MORE = 'MORE',
   PROFILE = 'PROFILE',
   SETTINGS = 'SETTINGS',
 
@@ -94,6 +95,18 @@ export const INITIAL_ADMIN_CONFIG: AdminConfig = {
   announcement: 'Dica do dia: Use a ferramenta de Exegese para analisar o texto original em grego e hebraico.',
   maintenanceMode: false,
   activeModules: Object.values(ExegesisModule),
+};
+
+export interface ReadingSettings {
+  fontSize: number;
+  lineHeight: number;
+  fontFamily: 'serif' | 'sans';
+}
+
+export const INITIAL_READING_SETTINGS: ReadingSettings = {
+  fontSize: 16,
+  lineHeight: 1.6,
+  fontFamily: 'serif',
 };
 
 export const INITIAL_USER: UserProfile = {

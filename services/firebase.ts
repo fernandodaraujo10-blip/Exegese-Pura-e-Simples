@@ -3,9 +3,7 @@ import {
     getAuth,
     GoogleAuthProvider,
     signInWithPopup,
-    onAuthStateChanged,
     signOut,
-    User
 } from "firebase/auth";
 import {
     getFirestore,
@@ -15,9 +13,18 @@ import {
     collection,
     query,
     getDocs,
-    where
+    where,
+    orderBy,
+    limit,
+    addDoc,
+    serverTimestamp
 } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "firebase/storage";
 import { UserProfile, AdminConfig, INITIAL_ADMIN_CONFIG } from "../core/types";
 
 const firebaseConfig = {
@@ -51,6 +58,12 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
     return docSnap.exists() ? docSnap.data() as UserProfile : null;
 };
 
+export const getAllUsers = async (): Promise<UserProfile[]> => {
+    const q = query(collection(db, "users"), orderBy("registrationDate", "desc"));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => doc.data() as UserProfile);
+};
+
 // --- Admin Config Helpers ---
 export const saveAdminConfig = async (config: AdminConfig) => {
     await setDoc(doc(db, "config", "app"), config);
@@ -63,10 +76,37 @@ export const getAdminConfig = async (): Promise<AdminConfig> => {
 };
 
 // --- Storage Helpers ---
-export const uploadLogo = async (file: File) => {
-    const storageRef = ref(storage, `logos/logo-${Date.now()}`);
+export const uploadLogo = async (file: File): Promise<string> => {
+    const storageRef = ref(storage, `assets/logo_${Date.now()}`);
     await uploadBytes(storageRef, file);
     return getDownloadURL(storageRef);
+};
+
+// --- Community Helpers ---
+export interface SharedStudy {
+    id?: string;
+    userId: string;
+    userName: string;
+    userAvatar?: string;
+    reference: string;
+    theology: string;
+    content: string;
+    timestamp: any;
+    likes: number;
+}
+
+export const shareStudy = async (study: Omit<SharedStudy, 'timestamp' | 'likes'>) => {
+    await addDoc(collection(db, "shared_studies"), {
+        ...study,
+        timestamp: serverTimestamp(),
+        likes: 0
+    });
+};
+
+export const getSharedStudies = async (limitNum: number = 20): Promise<SharedStudy[]> => {
+    const q = query(collection(db, "shared_studies"), orderBy("timestamp", "desc"), limit(limitNum));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as SharedStudy));
 };
 
 export default app;

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { AppView } from './core/types';
 import { useAppStore } from './core/store';
 import { auth, getUserProfile } from './services/firebase';
@@ -14,6 +15,7 @@ import More from './client/More';
 import Profile from './client/Profile';
 import Settings from './client/Settings';
 import Registration from './client/Registration';
+import Community from './client/Community';
 import Dashboard from './admin/Dashboard';
 import AdminLogin from './admin/Login';
 import { Book, Lock, User, Settings as SettingsIcon, Loader2 } from 'lucide-react';
@@ -27,9 +29,11 @@ const App: React.FC = () => {
     setUser,
     config,
     theme,
+    readingSettings,
     isLoading,
     init,
-    setTheme
+    setTheme,
+    setReadingSettings
   } = useAppStore();
 
   useEffect(() => {
@@ -95,7 +99,9 @@ const App: React.FC = () => {
             Descubra as riquezas das Escrituras<br />com ferramentas de estudo profundo.
           </p>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02, backgroundColor: '#d4af37' }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => {
               if (user.isRegistered) {
                 setView(AppView.HOME);
@@ -103,17 +109,19 @@ const App: React.FC = () => {
                 setView(AppView.REGISTER);
               }
             }}
-            className="w-full py-4 bg-gold-500 hover:bg-gold-600 text-white rounded-xl font-body font-semibold text-base shadow-medium active:scale-[0.98] transition-all duration-200"
+            className="w-full py-4 bg-gold-500 text-white rounded-xl font-body font-semibold text-base shadow-medium transition-all duration-200"
           >
             Entrar no Estudo
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05, color: '#A16207' }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setView(AppView.HOME)}
-            className="mt-5 font-body text-ink-tertiary font-medium text-sm hover:text-gold-500 transition-colors duration-200 py-2"
+            className="mt-5 font-body text-ink-tertiary font-medium text-sm transition-colors duration-200 py-2"
           >
             Explorar sem cadastro
-          </button>
+          </motion.button>
         </div>
 
         <div className="w-full py-5 flex flex-col items-center bg-paper-secondary border-t border-paper-tertiary">
@@ -166,19 +174,39 @@ const App: React.FC = () => {
               </button>
             </header>
 
-            <div className={`w-full overflow-hidden h-[90%]`}>
-              {(() => {
-                switch (view) {
-                  case AppView.HOME: return <Home config={config} navigate={setView} />;
-                  case AppView.EXEGESIS: return <Exegesis onBack={() => setView(AppView.HOME)} />;
-                  case AppView.BIBLE: return <BibleAI />;
-                  case AppView.TOOLS: return <Tools navigate={setView} />;
-                  case AppView.MORE: return <More navigate={setView} config={config} initialSection={viewParams?.section} />;
-                  case AppView.PROFILE: return <Profile />;
-                  case AppView.SETTINGS: return <Settings currentTheme={theme} onToggleTheme={setTheme} onLogout={() => setView(AppView.WELCOME)} />;
-                  default: return <Home config={config} navigate={setView} />;
-                }
-              })()}
+            <div className={`w-full overflow-hidden h-[90%] relative`}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  className="h-full w-full"
+                >
+                  {(() => {
+                    switch (view) {
+                      case AppView.HOME: return <Home config={config} navigate={setView} />;
+                      case AppView.EXEGESIS: return <Exegesis onBack={() => setView(AppView.HOME)} />;
+                      case AppView.BIBLE: return <BibleAI />;
+                      case AppView.COMMUNITY: return <Community />;
+                      case AppView.TOOLS: return <Tools navigate={setView} />;
+                      case AppView.MORE: return <More navigate={setView} config={config} initialSection={viewParams?.section} />;
+                      case AppView.PROFILE: return <Profile />;
+                      case AppView.SETTINGS: return (
+                        <Settings
+                          currentTheme={theme}
+                          onToggleTheme={setTheme}
+                          onLogout={() => setView(AppView.WELCOME)}
+                          readingSettings={readingSettings}
+                          onUpdateReadingSettings={setReadingSettings}
+                        />
+                      );
+                      default: return <Home config={config} navigate={setView} />;
+                    }
+                  })()}
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div className="h-[10%] w-full z-50">
