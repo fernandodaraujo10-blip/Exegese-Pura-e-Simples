@@ -89,7 +89,7 @@ export interface AdminConfig {
 }
 
 export const INITIAL_ADMIN_CONFIG: AdminConfig = {
-  coverImageUrl: 'https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?q=80&w=1000&auto=format&fit=crop',
+  coverImageUrl: '/cover.png',
   coverTitle: 'Estude as Escrituras Profundamente',
   libraryDriveUrl: '',
   announcement: 'Dica do dia: Use a ferramenta de Exegese para analisar o texto original em grego e hebraico.',

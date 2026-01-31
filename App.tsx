@@ -89,7 +89,7 @@ const App: React.FC = () => {
         <div className="h-[45%] w-full flex flex-col items-center justify-center bg-gradient-to-b from-paper to-paper-secondary relative">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent opacity-60"></div>
           <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center shadow-strong mb-6 border-2 border-gold-500/20 overflow-hidden group">
-            <img src="/logo.jpg?v=2" alt="Logo" className="w-full h-full object-cover scale-150 transform transition-transform duration-700 group-hover:scale-[1.6]" />
+            <img src="/logo.png" alt="Logo" className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
           </div>
           <h1 className="font-heading text-4xl font-semibold text-ink tracking-tight">Exegese</h1>
           <h2 className="font-heading text-xl text-gold-500 font-medium tracking-wide mt-1 italic">Pura & Simples</h2>
