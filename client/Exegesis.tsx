@@ -100,7 +100,7 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
           </div>
         </div>
 
-        <div className={`flex-1 overflow-y-auto p-6 scroll-y transition-all duration-500 ${isReadingMode ? 'pb-12 bg-white' : 'pb-24 bg-paper'}`}>
+        <div className={`flex-1 overflow-y-auto p-6 scroll-y transition-all duration-500 ${isReadingMode ? 'pb-20 bg-white' : 'pb-32 bg-paper'}`}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -240,10 +240,10 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
         {/* 4. Action Button */}
         <motion.button
           whileHover={{ scale: 1.01 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.95 }}
           onClick={handleExecute}
           disabled={!reference || isLoading}
-          className={`w-full py-5 rounded-3xl shadow-strong flex items-center justify-center gap-4 font-body font-bold text-base text-white transition-all mt-2 ${!reference || isLoading ? 'bg-paper-tertiary cursor-not-allowed' : 'bg-primary'
+          className={`w-full py-5 min-h-[64px] rounded-3xl shadow-strong flex items-center justify-center gap-4 font-body font-bold text-base text-white transition-all mt-2 active:brightness-90 ${!reference || isLoading ? 'bg-paper-tertiary cursor-not-allowed' : 'bg-primary'
             }`}
         >
           {isLoading ? <Loader2 className="animate-spin" size={24} /> : <Send size={24} className="text-gold-400" />}

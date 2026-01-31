@@ -27,7 +27,7 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onChangeView }) =>
           <button
             key={item.label}
             onClick={() => onChangeView(item.view)}
-            className={`relative flex-1 flex flex-col items-center justify-center h-full transition-colors duration-300 ${isActive ? 'text-gold-600' : 'text-ink-tertiary hover:text-ink-secondary'
+            className={`relative flex-1 flex flex-col items-center justify-center min-h-[56px] transition-colors duration-300 active:bg-paper-tertiary/20 ${isActive ? 'text-gold-600' : 'text-ink-tertiary'
               }`}
           >
             <motion.div

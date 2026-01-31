@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/logo.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="description"
     content="Exegese Pura e Simples - O portal definitivo para estudo bíblico profundo. Ferramentas de exegese assistida por IA, léxico Grego/Hebraico e recursos teológicos reformados." />
   <meta name="keywords"
@@ -100,6 +101,7 @@
     body,
     html {
       height: 100%;
+      height: -webkit-fill-available;
       width: 100%;
       overflow: hidden;
       overscroll-behavior: none;
@@ -107,6 +109,8 @@
       font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
     button {
@@ -114,6 +118,7 @@
       border: none;
       outline: none;
       font-family: inherit;
+      touch-action: manipulation;
     }
 
     #root {
