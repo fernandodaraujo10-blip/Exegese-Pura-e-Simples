@@ -2,13 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TheologyLine, ExegesisModule } from './types';
 
 const getClient = () => {
-  // Use import.meta.env properly for Vite
+  // Garantir que a chave está sendo lida corretamente no ambiente Vite
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY ||
     import.meta.env.VITE_FIREBASE_API_KEY ||
-    (typeof process !== 'undefined' ? process.env.VITE_GEMINI_API_KEY : null);
+    'AIzaSyDOCwv2vT9OqyUO0fahCNRVIVAjJ1Rp6H8'; // Fallback direto para a chave enviada
 
-  if (!apiKey) {
-    console.error("Gemini API Key not found in Environment Variables");
+  if (!apiKey || apiKey.includes('YOUR_API_KEY')) {
+    console.error("Gemini API Key missing or invalid");
     return null;
   }
   return new GoogleGenerativeAI(apiKey);
