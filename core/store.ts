@@ -72,24 +72,25 @@ export const useAppStore = create<AppState>((set, get) => ({
     setLoading: (loading) => set({ isLoading: loading }),
 
     init: async () => {
-        set({ isLoading: true });
+        // 1. Carregar instantaneamente do LocalStorage para evitar tela de loading
+        const cachedConfig = CoreStorage.loadConfig();
+        const cachedTheme = CoreStorage.loadTheme();
+
+        set({
+            config: cachedConfig,
+            theme: cachedTheme,
+            isLoading: false // Já libera a tela para o usuário
+        });
+
+        // 2. Atualizar em segundo plano (background) sem travar o app
         try {
-            // 1. Load Admin Config
             const fbConfig = await getAdminConfig();
-            set({ config: fbConfig });
-
-            // 2. Local fallback if needed
-            if (!fbConfig) {
-                set({ config: CoreStorage.loadConfig() });
+            if (fbConfig) {
+                set({ config: fbConfig });
+                CoreStorage.saveConfig(fbConfig);
             }
-
-            // 3. Theme
-            set({ theme: CoreStorage.loadTheme() });
-
         } catch (error) {
-            console.error("Hydration Error:", error);
-        } finally {
-            set({ isLoading: false });
+            console.error("Erro ao atualizar config em background:", error);
         }
     },
 
