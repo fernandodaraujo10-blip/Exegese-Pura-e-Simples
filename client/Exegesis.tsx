@@ -177,15 +177,30 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
         </motion.div>
 
         {/* 1. Reference Input */}
-        <div className="bg-white p-5 rounded-3xl border border-paper-tertiary shadow-soft focus-within:border-gold-500 transition-all focus-within:shadow-medium">
-          <label className="text-[10px] font-black text-ink-tertiary uppercase tracking-widest block mb-1">Passagem Bíblica</label>
-          <input
-            type="text"
-            value={reference}
-            onChange={(e) => setReference(e.target.value)}
-            placeholder="Ex: Hebreus 11:1"
-            className="w-full text-2xl font-heading font-bold text-ink placeholder-paper-tertiary/50 outline-none bg-transparent"
-          />
+        <div className="flex flex-col gap-3">
+          <div className="bg-white p-5 rounded-3xl border border-paper-tertiary shadow-soft focus-within:border-gold-500 transition-all focus-within:shadow-medium">
+            <label className="text-[10px] font-black text-ink-tertiary uppercase tracking-widest block mb-1">Passagem Bíblica</label>
+            <input
+              type="text"
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+              placeholder="Ex: Hebreus 11:1"
+              className="w-full text-2xl font-heading font-bold text-ink placeholder-paper-tertiary/50 outline-none bg-transparent"
+            />
+          </div>
+
+          {/* Suggestions */}
+          <div className="flex gap-2 pl-1">
+            {['Hebreus 11:1', 'Salmos 23:1', 'João 3:16'].map((sug) => (
+              <button
+                key={sug}
+                onClick={() => setReference(sug)}
+                className="px-3 py-1.5 bg-paper-secondary border border-paper-tertiary rounded-full text-[10px] font-bold text-ink-tertiary hover:text-gold-600 hover:border-gold-200 transition-all active:scale-95"
+              >
+                {sug}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* 2. Theology Selector */}
