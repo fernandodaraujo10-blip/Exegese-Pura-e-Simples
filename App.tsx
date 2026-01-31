@@ -4,6 +4,7 @@ import { AppView } from './core/types';
 import { useAppStore } from './core/store';
 import { auth, getUserProfile } from './services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { usePWAInstall } from './core/usePWAInstall';
 
 // Module Imports
 import Navigation from './client/Navigation';
@@ -18,9 +19,10 @@ import Registration from './client/Registration';
 import Community from './client/Community';
 import Dashboard from './admin/Dashboard';
 import AdminLogin from './admin/Login';
-import { Book, Lock, User, Settings as SettingsIcon, Loader2 } from 'lucide-react';
+import { Book, Lock, User, Settings as SettingsIcon, Loader2, Download } from 'lucide-react';
 
 const App: React.FC = () => {
+  const { isInstallable, triggerInstall } = usePWAInstall();
   const {
     view,
     viewParams,
@@ -98,6 +100,20 @@ const App: React.FC = () => {
           <p className="font-body text-ink-secondary text-base mb-8 text-center leading-relaxed">
             Descubra as riquezas das Escrituras<br />com ferramentas de estudo profundo.
           </p>
+
+          {isInstallable && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={triggerInstall}
+              className="w-full py-4 mb-3 bg-primary text-gold-500 rounded-xl font-body font-bold text-sm shadow-medium flex items-center justify-center gap-3 border border-gold-500/20"
+            >
+              <Download size={18} />
+              Instalar Aplicativo (Android/iOS)
+            </motion.button>
+          )}
 
           <motion.button
             whileHover={{ scale: 1.02, backgroundColor: '#d4af37' }}
