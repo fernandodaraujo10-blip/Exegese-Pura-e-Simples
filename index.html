@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://lucide.dev/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Exegese Pura e Simples - Estudo bíblico profundo com simplicidade. Ferramentas de exegese, IA e recursos para estudantes da Palavra." />
+    <meta name="theme-color" content="#1C1917" />
+    <title>Exegese Pura e Simples</title>
+    
+    <!-- Google Fonts: Cormorant (headings) + Montserrat (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              // Primary - Deep warm browns
+              primary: {
+                DEFAULT: '#1C1917',
+                light: '#292524',
+                dark: '#0C0A09',
+              },
+              // Secondary - Warm grays
+              secondary: {
+                DEFAULT: '#44403C',
+                light: '#57534E',
+                dark: '#292524',
+              },
+              // Accent - Gold (premium, scriptural)
+              gold: {
+                50: '#FEFCE8',
+                100: '#FEF3C7',
+                200: '#FEF08A',
+                300: '#FDE047',
+                400: '#FACC15',
+                500: '#CA8A04',
+                600: '#A16207',
+                700: '#854D0E',
+              },
+              // Backgrounds - Paper-like
+              paper: {
+                DEFAULT: '#FAFAF9',
+                secondary: '#F5F5F4',
+                tertiary: '#E7E5E4',
+              },
+              // Text
+              ink: {
+                DEFAULT: '#0C0A09',
+                secondary: '#44403C',
+                tertiary: '#78716C',
+              },
+            },
+            fontFamily: {
+              'heading': ['Cormorant', 'Georgia', 'Times New Roman', 'serif'],
+              'body': ['Montserrat', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            },
+            boxShadow: {
+              'soft': '0 1px 2px rgba(12, 10, 9, 0.05)',
+              'medium': '0 4px 6px -1px rgba(12, 10, 9, 0.07), 0 2px 4px -2px rgba(12, 10, 9, 0.05)',
+              'strong': '0 10px 15px -3px rgba(12, 10, 9, 0.08), 0 4px 6px -4px rgba(12, 10, 9, 0.05)',
+            },
+            borderRadius: {
+              'xl': '1rem',
+              '2xl': '1.25rem',
+            },
+          },
+        },
+      }
+    </script>
+    
+    <style>
+      /* EXEGESE PURA E SIMPLES - BASE RESET */
+      :root {
+        --app-height: 100%;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body, html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        overscroll-behavior: none;
+        background-color: #FAFAF9;
+        font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-family: inherit;
+      }
+
+      #root {
+        height: 100%;
+        width: 100%;
+        background-color: #FAFAF9;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Utilities */
+      .scroll-y { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .fixed-layout { overflow: hidden; height: 100%; width: 100%; }
+      .center-flex { display: flex; align-items: center; justify-content: center; }
+      
+      /* Focus States for Accessibility */
+      :focus-visible {
+        outline: 2px solid #CA8A04;
+        outline-offset: 2px;
+      }
+      
+      /* Smooth Scrollbars */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #F5F5F4;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #A8A29E;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #78716C;
+      }
+    </style>
+
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+      }
+    }
+    </script>
+    <link rel="stylesheet" href="/index.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
