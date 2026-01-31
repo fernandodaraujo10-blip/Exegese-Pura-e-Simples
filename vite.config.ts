@@ -24,12 +24,12 @@ export default defineConfig(({ mode }) => {
           display: 'standalone',
           icons: [
             {
-              src: 'logo.jpg',
+              src: 'logo.jpg?v=2',
               sizes: '512x512',
               type: 'image/jpeg'
             },
             {
-              src: 'logo.jpg',
+              src: 'logo.jpg?v=2',
               sizes: '512x512',
               type: 'image/jpeg',
               purpose: 'any maskable'
