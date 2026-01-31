@@ -77,9 +77,9 @@ const Home: React.FC<HomeProps> = ({ config, navigate }) => {
 
       {/* 3. ESPAÇO RESERVADO (Restante) */}
       <section className="flex-1 w-full px-4 pb-4 min-h-0">
-        <div className="w-full h-full bg-gradient-to-br from-paper-secondary to-paper-tertiary rounded-2xl border border-paper-tertiary flex flex-col items-center justify-center text-ink-tertiary">
-          <span className="font-body text-xs font-semibold uppercase tracking-[0.15em] mb-1">Mural de Avisos</span>
-          <span className="font-body text-[10px]">Espaço reservado para recados</span>
+        <div className="w-full h-full bg-gradient-to-br from-paper-secondary to-paper-tertiary rounded-2xl border border-paper-tertiary flex flex-col items-center justify-center text-ink-tertiary p-6 text-center">
+          <span className="font-body text-xs font-semibold uppercase tracking-[0.15em] mb-2 text-gold-600">Mural de Avisos</span>
+          <p className="font-body text-xs leading-relaxed italic">{config.announcement}</p>
         </div>
       </section>
 
@@ -101,8 +101,8 @@ const HomeButton: React.FC<HomeButtonProps> = ({ label, icon, onClick, variant }
     <button
       onClick={onClick}
       className={`rounded-2xl shadow-soft border flex flex-col items-center justify-center gap-1.5 active:scale-[0.97] transition-all duration-200 w-full h-full cursor-pointer ${isPrimary
-          ? 'bg-gold-500 text-white border-gold-600 shadow-medium hover:bg-gold-600'
-          : 'bg-white text-ink border-paper-tertiary hover:border-gold-200 hover:shadow-medium'
+        ? 'bg-gold-500 text-white border-gold-600 shadow-medium hover:bg-gold-600'
+        : 'bg-white text-ink border-paper-tertiary hover:border-gold-200 hover:shadow-medium'
         }`}
     >
       <div className={`p-2.5 rounded-xl ${isPrimary ? 'bg-white/20' : 'bg-paper-secondary'

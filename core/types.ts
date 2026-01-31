@@ -3,20 +3,20 @@ export enum AppView {
   WELCOME = 'WELCOME',
   REGISTER = 'REGISTER',
   HOME = 'HOME',
-  BIBLE = 'BIBLE', 
+  BIBLE = 'BIBLE',
   EXEGESIS = 'EXEGESIS',
   TOOLS = 'TOOLS', // Anteriormente NOTES/Ferramentas
   MORE = 'MORE', // Anteriormente COMMUNITY/Ajuda
   PROFILE = 'PROFILE',
   SETTINGS = 'SETTINGS',
-  
+
   // ADMIN VIEWS
   ADMIN_LOGIN = 'ADMIN_LOGIN',
-  ADMIN_HOME = 'ADMIN_HOME',       
-  ADMIN_USERS = 'ADMIN_USERS',     
-  ADMIN_CONTENT = 'ADMIN_CONTENT', 
-  ADMIN_ANALYTICS = 'ADMIN_ANALYTICS', 
-  ADMIN_SUPPORT = 'ADMIN_SUPPORT', 
+  ADMIN_HOME = 'ADMIN_HOME',
+  ADMIN_USERS = 'ADMIN_USERS',
+  ADMIN_CONTENT = 'ADMIN_CONTENT',
+  ADMIN_ANALYTICS = 'ADMIN_ANALYTICS',
+  ADMIN_SUPPORT = 'ADMIN_SUPPORT',
 }
 
 export enum TheologyLine {
@@ -82,6 +82,7 @@ export interface AdminConfig {
   coverImageUrl: string;
   coverTitle: string;
   libraryDriveUrl: string; // Novo campo para Biblioteca
+  announcement: string; // Mural de Avisos
   maintenanceMode: boolean;
   activeModules: ExegesisModule[];
 }
@@ -90,6 +91,7 @@ export const INITIAL_ADMIN_CONFIG: AdminConfig = {
   coverImageUrl: 'https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?q=80&w=1000&auto=format&fit=crop',
   coverTitle: 'Estude as Escrituras Profundamente',
   libraryDriveUrl: '',
+  announcement: 'Dica do dia: Use a ferramenta de Exegese para analisar o texto original em grego e hebraico.',
   maintenanceMode: false,
   activeModules: Object.values(ExegesisModule),
 };
@@ -101,7 +103,7 @@ export const INITIAL_USER: UserProfile = {
   church: '',
   role: '',
   whatsapp: '',
-  isRegistered: false, 
+  isRegistered: false,
   avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
   registrationDate: '',
 };
