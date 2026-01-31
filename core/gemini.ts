@@ -2,9 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TheologyLine, ExegesisModule } from './types';
 
 const getClient = () => {
-  const apiKey = process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  // Use import.meta.env properly for Vite
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY ||
+    import.meta.env.VITE_FIREBASE_API_KEY ||
+    (typeof process !== 'undefined' ? process.env.VITE_GEMINI_API_KEY : null);
+
   if (!apiKey) {
-    console.error("API Key not found");
+    console.error("Gemini API Key not found in Environment Variables");
     return null;
   }
   return new GoogleGenerativeAI(apiKey);
@@ -68,8 +72,7 @@ export const askBibleAI = async (
 
   try {
     const model = client.getGenerativeModel({
-      model: "gemini-1.5-flash", // Changed back to 1.5-flash as 2.0-flash is not a standard model name
-      systemInstruction: roleInstruction
+      model: "gemini-1.5-flash",
     });
 
     const result = await model.generateContent(prompt);
@@ -168,8 +171,7 @@ export const generateExegesis = async (
 
   try {
     const model = client.getGenerativeModel({
-      model: "gemini-1.5-flash", // Changed back to 1.5-flash as 2.0-flash is not a standard model name
-      systemInstruction: systemContext
+      model: "gemini-1.5-flash",
     });
 
     const result = await model.generateContent(`${styleGuide}\n\nTAREFA ESPECÍFICA:\n${taskInstruction}`);
