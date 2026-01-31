@@ -142,13 +142,13 @@ const App: React.FC = () => {
 
         <div className="w-full py-5 flex flex-col items-center bg-paper-secondary border-t border-paper-tertiary">
           <span className="font-body text-[10px] text-ink-tertiary uppercase tracking-[0.2em] font-medium">
-            FerTaise Tech
+            FerTaise Tech • v2.2.0-PRO
           </span>
           <button
             onClick={() => setView(AppView.ADMIN_LOGIN)}
             className="mt-3 px-4 py-1.5 text-xs text-ink-tertiary/50 hover:text-ink-tertiary font-body transition-colors duration-200 rounded-full hover:bg-paper-tertiary/50"
           >
-            Admin
+            Acesso Admin
           </button>
         </div>
       </div>
