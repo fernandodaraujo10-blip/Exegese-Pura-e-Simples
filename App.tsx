@@ -19,7 +19,8 @@ import Registration from './client/Registration';
 import Community from './client/Community';
 import Dashboard from './admin/Dashboard';
 import AdminLogin from './admin/Login';
-import { Book, Lock, User, Settings as SettingsIcon, Loader2, Download } from 'lucide-react';
+import { Book, Lock, User, Settings as SettingsIcon, Loader2, Download, Mail } from 'lucide-react';
+import { signInWithGoogle } from './services/firebase';
 
 const App: React.FC = () => {
   const { isInstallable, triggerInstall } = usePWAInstall();
@@ -116,6 +117,22 @@ const App: React.FC = () => {
           )}
 
           <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={async () => {
+              try {
+                await signInWithGoogle();
+              } catch (error) {
+                console.error("Auth Error:", error);
+              }
+            }}
+            className="w-full py-4 mb-3 bg-white border border-paper-tertiary rounded-xl flex items-center justify-center gap-3 font-body font-bold text-sm text-ink-secondary shadow-soft"
+          >
+            <Mail size={18} className="text-gold-600" />
+            Entrar com Google
+          </motion.button>
+
+          <motion.button
             whileHover={{ scale: 1.02, backgroundColor: '#d4af37' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => {
@@ -127,7 +144,7 @@ const App: React.FC = () => {
             }}
             className="w-full py-4 bg-gold-500 text-white rounded-xl font-body font-semibold text-base shadow-medium transition-all duration-200"
           >
-            Entrar no Estudo
+            Começar Grátis
           </motion.button>
 
           <motion.button
