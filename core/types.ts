@@ -10,6 +10,7 @@ export enum AppView {
   MORE = 'MORE',
   PROFILE = 'PROFILE',
   SETTINGS = 'SETTINGS',
+  HISTORY = 'HISTORY',
 
   // ADMIN VIEWS
   ADMIN_LOGIN = 'ADMIN_LOGIN',

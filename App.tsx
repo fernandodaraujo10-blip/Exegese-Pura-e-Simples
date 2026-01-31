@@ -17,6 +17,7 @@ import Profile from './client/Profile';
 import Settings from './client/Settings';
 import Registration from './client/Registration';
 import Community from './client/Community';
+import History from './client/History';
 import Dashboard from './admin/Dashboard';
 import AdminLogin from './admin/Login';
 import { Book, Lock, User, Settings as SettingsIcon, Loader2, Download, Mail } from 'lucide-react';
@@ -248,6 +249,7 @@ const App: React.FC = () => {
                           onUpdateReadingSettings={setReadingSettings}
                         />
                       );
+                      case AppView.HISTORY: return <History />;
                       default: return <Home config={config} navigate={setView} />;
                     }
                   })()}

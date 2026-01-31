@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, BookOpen, Users, Cpu, Heart, FileText } from 'lucide-react';
+import { Zap, BookOpen, Users, Cpu, Heart, FileText, Clock } from 'lucide-react';
 import { AppView, AdminConfig } from '../core/types';
 
 interface HomeProps {
@@ -13,14 +13,19 @@ const Home: React.FC<HomeProps> = ({ config, navigate }) => {
     <div className="home-fixed w-full h-full bg-paper flex flex-col relative overflow-hidden">
 
       {/* 1. CAPA (30%) - Fixed */}
-      <section className="h-[30%] w-full relative shrink-0 overflow-hidden">
+      <section className="h-[30%] w-full relative shrink-0 overflow-hidden bg-paper-tertiary">
+        <div className="absolute inset-0 animate-pulse bg-paper-tertiary" />
         <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1.05 }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: "reverse" }}
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1.05, opacity: 0.5 }}
+          transition={{
+            scale: { duration: 10, repeat: Infinity, repeatType: "reverse" },
+            opacity: { duration: 1 }
+          }}
           src={config.coverImageUrl}
           alt="Capa"
-          className="w-full h-full object-cover brightness-[0.5]"
+          className="w-full h-full object-cover"
+          onLoad={(e) => (e.currentTarget.style.opacity = '0.5')}
         />
         <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent">
           <motion.div
@@ -44,6 +49,7 @@ const Home: React.FC<HomeProps> = ({ config, navigate }) => {
             { label: "Comunidade", icon: <Users size={20} />, view: AppView.COMMUNITY, variant: 'default' },
             { label: "Devocional", icon: <Heart size={20} />, params: { section: 'DEVOTIONAL' }, view: AppView.MORE, variant: 'default' },
             { label: "Livros", icon: <BookOpen size={20} />, params: { section: 'BOOKS' }, view: AppView.MORE, variant: 'default' },
+            { label: "Histórico", icon: <Clock size={20} />, view: AppView.HISTORY, variant: 'default' }, // Added History button
           ].map((btn, i) => (
             <motion.div
               key={btn.label}

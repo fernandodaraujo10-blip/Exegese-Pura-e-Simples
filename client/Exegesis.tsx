@@ -12,7 +12,7 @@ interface ExegesisProps {
 }
 
 const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
-  const { readingSettings, setView, user } = useAppStore();
+  const { readingSettings, viewParams, setView, user } = useAppStore();
   const [reference, setReference] = useState('');
   const [theology, setTheology] = useState<TheologyLine>(TheologyLine.CALVINIST);
   const [module, setModule] = useState<ExegesisModule>(ExegesisModule.FULL_EXEGESIS);
@@ -20,6 +20,15 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
   const [result, setResult] = useState<string | null>(null);
   const [isSharing, setIsSharing] = useState(false);
   const [isReadingMode, setIsReadingMode] = useState(false);
+
+  React.useEffect(() => {
+    if (viewParams?.savedStudy) {
+      setReference(viewParams.savedStudy.reference);
+      setTheology(viewParams.savedStudy.theology);
+      setModule(viewParams.savedStudy.module);
+      setResult(viewParams.savedStudy.content);
+    }
+  }, [viewParams]);
 
   const handleExecute = async () => {
     if (!reference) return;
