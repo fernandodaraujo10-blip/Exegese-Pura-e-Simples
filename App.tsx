@@ -141,7 +141,20 @@ const App: React.FC = () => {
 
   // --- 3. REGISTRATION SCREEN ---
   if (view === AppView.REGISTER) {
-    return <Registration onComplete={() => setView(AppView.HOME)} />;
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={AppView.REGISTER}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+          className="h-full w-full"
+        >
+          <Registration onComplete={() => setView(AppView.HOME)} />
+        </motion.div>
+      </AnimatePresence>
+    );
   }
 
   // --- 4. CLIENT PLATFORM ---
@@ -181,7 +194,7 @@ const App: React.FC = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
                   className="h-full w-full"
                 >
                   {(() => {
