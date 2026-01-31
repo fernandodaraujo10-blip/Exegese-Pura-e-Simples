@@ -1,27 +1,29 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { TheologyLine, ExegesisModule } from './types';
 
 const getClient = () => {
-  const apiKey = process.env.API_KEY;
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (!apiKey) {
-    console.error("API Key not found");
+    console.error("VITE_GEMINI_API_KEY not found in environment variables");
     return null;
   }
-  return new GoogleGenAI({ apiKey });
+  return new GoogleGenerativeAI(apiKey);
 };
 
 // --- CHAT AI (BIBLE HELP) ---
 export const askBibleAI = async (
-    question: string, 
-    theology: TheologyLine, 
-    persona: string
+  question: string,
+  theology: TheologyLine,
+  persona: string
 ): Promise<string> => {
-  const client = getClient();
-  if (!client) return "Erro: Chave de API não configurada.";
+  const genAI = getClient();
+  if (!genAI) return "Erro: Chave de API não configurada.";
+
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   // Configuração da Persona
   let roleInstruction = "";
-  
+
   if (persona === 'Conselheiro') {
     roleInstruction = `
       ATUE COMO UM CONSELHEIRO PASTORAL BÍBLICO (NÃO PSICÓLOGO).
@@ -34,7 +36,6 @@ export const askBibleAI = async (
       4. Se a situação for grave (suicídio, abuso), recomende ajuda profissional e pastoral local com amor.
     `;
   } else if (persona === 'Professor') {
-    // MODO ESTUDOS
     roleInstruction = `
       ATUE COMO UM PROFESSOR DE ESCOLA BÍBLICA DIDÁTICO E ORGANIZADO.
       Sua linha teológica é: ${theology}.
@@ -46,7 +47,6 @@ export const askBibleAI = async (
       4. Cite referências cruzadas se necessário.
     `;
   } else {
-    // Teólogo genérico ou específico
     const personaName = persona === 'Teólogo' ? 'Um Teólogo Erudito' : persona;
     roleInstruction = `
       ATUE COMO: ${personaName.toUpperCase()}.
@@ -73,14 +73,12 @@ export const askBibleAI = async (
   `;
 
   try {
-    const response = await client.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-    });
-    return response.text || "Não entendi. Pode reformular?";
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text() || "Não entendi. Pode reformular?";
   } catch (error) {
     console.error("AI Error:", error);
-    return "Estou sem conexão no momento. Tente já.";
+    return "Estou sem conexão no momento. Tente novamente em breve.";
   }
 };
 
@@ -90,16 +88,21 @@ export const generateExegesis = async (
   theology: TheologyLine,
   module: ExegesisModule
 ): Promise<string> => {
-  const client = getClient();
-  if (!client) return "Erro: Chave de API não configurada. Contate o ADMIN.";
+  const genAI = getClient();
+  if (!genAI) return "Erro: Chave de API não configurada. Contate o ADMIN.";
 
-  // Prompt Engineering for specific theological lines
+  const model = genAI.getGenerativeModel({
+    model: "gemini-1.5-flash",
+    generationConfig: {
+      temperature: 0.2,
+    }
+  });
+
   let systemContext = "";
   if (theology === TheologyLine.CALVINIST) systemContext = "Adote uma perspectiva estritamente Reformada/Calvinista (Soberania de Deus, TULIP).";
   if (theology === TheologyLine.ARMINIAN) systemContext = "Adote uma perspectiva estritamente Arminiana (Graça Preveniente, Livre Arbítrio).";
   if (theology === TheologyLine.PENTECOSTAL) systemContext = "Adote uma perspectiva estritamente Pentecostal (Atualidade dos dons, Poder do Espírito).";
 
-  // INSTRUÇÕES GERAIS DE ESTILO
   const styleGuide = `
     REGRAS DE OURO (OBRIGATÓRIO):
     1. NÃO GERE SERMÃO OU PREGAÇÃO.
@@ -184,16 +187,9 @@ export const generateExegesis = async (
   `;
 
   try {
-    const response = await client.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: prompt,
-      config: {
-        thinkingConfig: { thinkingBudget: 1024 }, 
-        temperature: 0.2, // Baixa temperatura para precisão e menos "criatividade" (alucinação)
-      }
-    });
-    
-    return response.text || "Ocorreu um erro ao gerar o conteúdo.";
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text() || "Ocorreu um erro ao gerar o conteúdo.";
   } catch (error) {
     console.error("AI Error:", error);
     return "Erro de conexão com o servidor de Inteligência Artificial.";
