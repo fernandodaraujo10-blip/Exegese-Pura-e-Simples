@@ -261,7 +261,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout }) => {
     <div className="h-full w-full bg-slate-900 text-white flex flex-col relative overflow-hidden font-sans">
       <header className="absolute top-0 left-0 w-full z-50 flex justify-between items-center p-4 pt-8 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-red-600 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-xl shadow-red-600/20 transform -rotate-3 border-2 border-red-400">ADM</div>
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/10 border-2 border-red-500 overflow-hidden">
+            <img src="/logo.jpg" alt="Logo" className="w-full h-full object-cover" />
+          </div>
           <div>
             <h1 className="font-black text-sm leading-none text-white tracking-tight">EXEGESE CLOUD</h1>
             <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Admin Dashboard</span>
