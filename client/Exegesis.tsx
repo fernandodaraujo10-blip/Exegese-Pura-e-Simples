@@ -159,8 +159,8 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
 
   // TELA DE CONFIGURAÇÃO
   return (
-    <div className="flex flex-col h-full bg-paper pt-20 pb-4 overflow-hidden">
-      <div className="flex-1 flex flex-col px-6 gap-6 justify-center max-w-md mx-auto w-full">
+    <div className="flex flex-col h-full bg-paper pt-24 pb-8 overflow-y-auto scroll-y">
+      <div className="flex flex-col px-6 gap-8 max-w-md mx-auto w-full">
 
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -211,9 +211,9 @@ const Exegesis: React.FC<ExegesisProps> = ({ onBack }) => {
         </div>
 
         {/* 3. Module Selector */}
-        <div className="flex-1 min-h-0 flex flex-col">
+        <div className="flex flex-col">
           <label className="text-[10px] font-black text-ink-tertiary uppercase tracking-widest block mb-3 pl-1">Módulo de Processamento</label>
-          <div className="grid grid-cols-2 gap-4 overflow-y-auto pr-1 pb-4 scroll-y">
+          <div className="grid grid-cols-2 gap-4">
             {Object.values(ExegesisModule).map((m, idx) => {
               const arts = [
                 'https://images.unsplash.com/photo-1544648156-5388451882c5?auto=format&fit=crop&q=80&w=300',
